@@ -2,6 +2,7 @@ package com.sprinkle.cliksource.ClickSourceVideo.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -55,6 +56,17 @@ public class User {
 	public List<Link> getLinks() {
 		return links;
 	}
+	
+	
+	 public int findIndexByLinkid(String linkid) 
+	    { 
+	        int size = links.size(); 
+	        return IntStream.range(0, size) 
+	            .filter(i -> linkid.equals(links.get(i).getLinkid()))
+	            .findFirst() 
+	            .orElse(-1);
+	    } 
+
 
 	public void setLinks(List<Link> links) {
 		this.links = links;
@@ -65,10 +77,8 @@ public class User {
 		this.links.add(link);
 	}
 	
-	public void deleteLink(String linkid) {
-		//try catch / if to check for int
-		int linkID = Integer.parseInt(linkid);
-		this.links.remove(linkID);
+	public void deleteLink(int index) {
+		this.links.remove(index);
 		
 	}
 	

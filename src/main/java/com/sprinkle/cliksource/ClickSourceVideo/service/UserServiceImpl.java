@@ -1,6 +1,7 @@
 package com.sprinkle.cliksource.ClickSourceVideo.service;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,11 +49,14 @@ public class UserServiceImpl implements UserService {
 		repository.save(user);
 		return user;
 	}
+	
 
+	//find link by id then delete the index 
 	@Override
 	public User deletelink(String userid, String linkid) {
 		User user = repository.findByuserid(userid);
-		user.deleteLink(linkid);
+		int index = user.findIndexByLinkid(linkid);
+		user.deleteLink(index);
 		repository.save(user);
 		return user;
 	}
